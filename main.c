@@ -52,7 +52,7 @@ void imprimirArreglo(int *arreglo, int tamano) {
   printf("\n-----------\n");
 }
 
-int mierda(int **ca, int fila) {
+int sumaFilaMatrizCA(int **ca, int fila) {
   int sumar = 0;
   for (int i = (fila - 1); i < fila; i++) {
     for (int j = 0; j < 3; j++) {
@@ -63,11 +63,11 @@ int mierda(int **ca, int fila) {
   return sumar;
 }
 
-int noTengoIdea(int **ca, int *disponible, int aux) {
+int evaluarFilas(int **ca, int *disponible, int aux) {
   int contador = 0;
   for (int i = (aux - 1); i < aux; i++) {
     for (int j = 0; j < 3; j++) {
-      if (ca[i][j] <= disponible[j] && mierda(ca, aux) != 0) {
+      if (ca[i][j] <= disponible[j] && sumaFilaMatrizCA(ca, aux) != 0) {
         contador++;
       }
     }
@@ -108,13 +108,11 @@ void liberarMemoriaMatrizA(int **c, int **a, int fila) {
   }
 }
 
-void testeo(int **c, int **a, int **ca, int *disponible, int fila, int columna) {
-  int test = 0;
+void procedimientoMatrices(int **c, int **a, int **ca, int *disponible, int fila, int columna) {
+  int resultado = 0;
   for (int k = 1; k <= fila; k++) {
-    test = noTengoIdea(ca, disponible, k);
-    //printf("valor de aciertos: %d\n",test);
-    if (test == 3) {
-      //printf("indice: %d\n",k - 1);
+    resultado = evaluarFilas(ca, disponible, k);
+    if (resultado == 3) {
       sumarFilaMatrizA(a, ca, k - 1);
       restarRecursosDisponibles(ca, disponible, k - 1);
       restarFilaMatrizCA(ca, k - 1);
@@ -145,6 +143,7 @@ int main() {
   int **a = crearMatrizDinamica(fila, columna);
   int **ca = crearMatrizDinamica(fila, columna);
   int *disponible = arregloDinamico(columna);
+  int estadoMatrizCA = 0;
 
   llenar(c, a, disponible, fila, columna);
   restar(c, a, ca, fila, columna);
@@ -154,11 +153,10 @@ int main() {
   imprimir(ca, fila, columna, "resultante");
   imprimirArreglo(disponible, columna);
 
-  int resultado = 0;
   do {
-    testeo(c, a, ca, disponible, fila, columna);
-    resultado = validarEstadoMatrizCA(ca, fila, columna);
-  } while (resultado != 0);
+    procedimientoMatrices(c, a, ca, disponible, fila, columna);
+    estadoMatrizCA = validarEstadoMatrizCA(ca, fila, columna);
+  } while (estadoMatrizCA != 0);
 
   for (int i = 0; i < 4; i++) {
     free(c[i]);

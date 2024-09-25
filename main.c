@@ -66,7 +66,6 @@ int mierda(int **ca, int fila) {
 int noTengoIdea(int **ca, int *disponible, int aux) {
   int contador = 0;
   for (int i = (aux - 1); i < aux; i++) {
-    //printf("indice fila: %d\n",i);
     for (int j = 0; j < 3; j++) {
       if (ca[i][j] <= disponible[j] && mierda(ca, aux) != 0) {
         contador++;
@@ -74,7 +73,6 @@ int noTengoIdea(int **ca, int *disponible, int aux) {
     }
   }
 
-  //printf("resultado de probando: %d\n", probando);
   return contador;
 }
 
@@ -128,7 +126,6 @@ void testeo(int **c, int **a, int **ca, int *disponible, int fila, int columna) 
       imprimir(a, fila, columna, "asignado");
       imprimirArreglo(disponible, columna);
     }
-    //printf("valor de la variable k: %d\n",k - 1);
   }
 }
 
@@ -139,7 +136,6 @@ int validarEstadoMatrizCA(int **ca, int fila, int columna) {
       suma += ca[i][j];
     }
   }
-  //printf("resultado de la suma: %d\n", suma);
   return suma;
 }
 
@@ -162,31 +158,7 @@ int main() {
   do {
     testeo(c, a, ca, disponible, fila, columna);
     resultado = validarEstadoMatrizCA(ca, fila, columna);
-    //printf("resultado de la suma matriz %d\n", resultado);
-  }while (resultado != 0);
-
-  /*
-  int aux = 1;
-  int resultado = 0;
-  do {
-    resultado = noTengoIdea(ca, disponible, aux);
-    printf("%d\n",resultado);
-    aux++;
-  } while (resultado != 3);
-
-  printf("%d\n", aux);
-
-  sumarFilaMatrizA(a, ca, aux - 2);
-  restarRecursosDisponibles(ca, disponible, aux - 2);
-  restarFilaMatrizCA(ca, aux - 2);
-  imprimir(a, fila, columna, 'a');
-  imprimir(ca, fila, columna, 'd');
-  imprimirArreglo(disponible, columna);
-  sumarRecursosDisponibles(a, disponible, aux - 2);
-  liberarMemoriaMatrizA(c, a, aux - 2);
-  imprimir(a, fila, columna, 'a');
-  imprimirArreglo(disponible, columna);
-  */
+  } while (resultado != 0);
 
   for (int i = 0; i < 4; i++) {
     free(c[i]);

@@ -137,6 +137,18 @@ int validarEstadoMatrizCA(int **ca, int fila, int columna) {
   return suma;
 }
 
+void liberarMemoria(int **ca, int **a, int **c, int fila) {
+  for (int i = 0; i < fila; i++) {
+    free(c[i]);
+    free(a[i]);
+    free(ca[i]);
+  }
+
+  free(c);
+  free(a);
+  free(ca);
+}
+
 int main() {
   int fila = 4, columna = 3;
   int **c = crearMatrizDinamica(fila, columna);
@@ -158,15 +170,7 @@ int main() {
     estadoMatrizCA = validarEstadoMatrizCA(ca, fila, columna);
   } while (estadoMatrizCA != 0);
 
-  for (int i = 0; i < 4; i++) {
-    free(c[i]);
-    free(a[i]);
-    free(ca[i]);
-  }
+  liberarMemoria(ca, a, c, fila);
 
-  free(c);
-  free(a);
-  free(ca);
-
-  return 0;
+    return 0;
 }

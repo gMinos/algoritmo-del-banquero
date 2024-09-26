@@ -109,7 +109,8 @@ void liberarMemoriaMatrizA(int **c, int **a, int8_t fila) {
   }
 }
 
-void procedimientoMatrices(int **c, int **a, int **ca, int *disponible, int8_t fila, int8_t columna) {
+void procedimientoMatrices(int **c, int **a, int **ca, int *disponible,
+                           int8_t fila, int8_t columna) {
   int8_t resultado = 0;
   for (int k = 1; k <= fila; k++) {
     resultado = evaluarFilas(ca, disponible, k);
@@ -150,7 +151,7 @@ void liberarMemoria(int **ca, int **a, int **c, int8_t fila) {
   free(ca);
 }
 
-int main() {
+int main(int argc, char *argv[]) {
   int8_t fila = 4, columna = 3;
   int **c = crearMatrizDinamica(fila, columna);
   int **a = crearMatrizDinamica(fila, columna);
